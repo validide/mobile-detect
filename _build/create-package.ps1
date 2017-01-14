@@ -1,7 +1,9 @@
 param([string]$version=[string]::Empty, [string]$nuGetPath=[string]::Empty)
 #
-# create_package.ps1
+# Script used to create a new NuGet package
 #
+# $version - the version for new package
+# $nuGetPath - the path to nuget.exe
 
 . .\_utilities.ps1
 

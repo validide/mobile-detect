@@ -1,5 +1,5 @@
 #
-# utilities.ps1
+# A set o utilities used to build the project
 #
 
 function Patch-File([string] $filePath, [string] $match, [string] $replace) {

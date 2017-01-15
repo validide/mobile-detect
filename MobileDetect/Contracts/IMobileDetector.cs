@@ -4,7 +4,7 @@ namespace MobileDetect.Contracts
 {
     public interface IMobileDetector
     {
-        bool IsMobile(Dictionary<string, string> headers);
-        bool IsTablet(Dictionary<string, string> headers);
+        bool IsMobile(Dictionary<string, string> requestHeaders);
+        bool IsTablet(Dictionary<string, string> requestHeaders);
     }
 }

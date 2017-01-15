@@ -18,11 +18,14 @@ if ($jsonVersion -ne $rulesVersion) {
   exit
 }
 
-$templatesRoot = '.\Templates\'
-$rulesRoot = '..\MobileDetect\MatchingRules\'
+$templateFile = '.\Templates\DefaultRules.generated.txt'
+$generatedFile = '..\MobileDetect\MatchingRules\DefaultRules.generated.cs'
+
+
+$templateContent = Get-Content $templateFile
 
 # update rules version
-(Get-Content ($templatesRoot + 'DefaultRules.generated.Version.txt')) -replace '\$version', $rulesVersion | Out-File ($rulesRoot + 'DefaultRules.generated.Version.cs')
+$templateContent = $templateContent -replace '\$template_version', $rulesVersion
 
 
 
@@ -32,7 +35,8 @@ $mobileHeaders = ''
 
 $mobileHeadersData.psobject.properties |
 ForEach {
-    $mobileHeaders += '{"' + $_.Name + '", '
+    $headerName = Resolve-HeaderName-FromPhp $_.Name
+    $mobileHeaders += '{"' + $headerName + '", '
 
     if ($_.Value -ne $null) {
         
@@ -65,7 +69,7 @@ if ($mobileHeaders.Length -gt 0) {
     $mobileHeaders = $mobileHeaders.Substring(0,$mobileHeaders.Length-(',' + "`r`n`t`t`t").Length)
 }
 
-(Get-Content ($templatesRoot + 'DefaultRules.generated.MobileHeaders.txt')) -replace '\$mobileHeaders', $mobileHeaders | Out-File ($rulesRoot + 'DefaultRules.generated.MobileHeaders.cs')
+$templateContent = $templateContent -replace '\$template_mobileHeaders', $mobileHeaders
 
 #update userAgentHeaders
 $userAgentHeadersData = $rulesData | select -expand uaHttpHeaders
@@ -74,7 +78,8 @@ $userAgentHeaders = ''
 if ($userAgentHeadersData -ne $null) {
         
     foreach($val in $userAgentHeadersData) {
-        $userAgentHeaders += '@"' + $val + '",' + "`r`n`t`t`t"
+        $headerName = Resolve-HeaderName-FromPhp $val
+        $userAgentHeaders += '@"' + $headerName + '",' + "`r`n`t`t`t"
     }
 
     if ($userAgentHeaders.Length -gt 0) {
@@ -82,13 +87,13 @@ if ($userAgentHeadersData -ne $null) {
     }
 
     if ($userAgentHeaders.Length -eq 0) {        
-        $userAgentHeaders += 'HTTP_USER_AGENT'
+        $userAgentHeaders += 'User-Agent'
     }
 } else {
-    $userAgentHeaders += 'HTTP_USER_AGENT'
+    $userAgentHeaders += 'User-Agent'
 }
 
-(Get-Content ($templatesRoot + 'DefaultRules.generated.UserAgentHeaders.txt')) -replace '\$userAgentHeaders', $userAgentHeaders | Out-File ($rulesRoot + 'DefaultRules.generated.UserAgentHeaders.cs')
+$templateContent = $templateContent -replace '\$template_userAgentHeaders', $userAgentHeaders
 
 
 #update userAgentMatches
@@ -111,7 +116,7 @@ if ($phones.Length -gt 0) {
     $phones = $phones.Substring(0,$phones.Length-(',' + "`r`n`t`t`t").Length)
 }
 
-(Get-Content ($templatesRoot + 'DefaultRules.generated.Phones.txt')) -replace '\$phones', $phones | Out-File ($rulesRoot + 'DefaultRules.generated.Phones.cs')
+$templateContent = $templateContent -replace '\$template_phones', $phones
 
 
 $tablets = ''
@@ -124,8 +129,7 @@ if ($tablets.Length -gt 0) {
     $tablets = $tablets.Substring(0,$tablets.Length-(',' + "`r`n`t`t`t").Length)
 }
 
-(Get-Content ($templatesRoot + 'DefaultRules.generated.Tablets.txt')) -replace '\$tablets', $tablets | Out-File ($rulesRoot + 'DefaultRules.generated.Tablets.cs')
-
+$templateContent = $templateContent -replace '\$template_tablets', $tablets
 
 $browsers = ''
 $userAgentMatchesData_browsers.psobject.properties |
@@ -137,8 +141,7 @@ if ($browsers.Length -gt 0) {
     $browsers = $browsers.Substring(0,$browsers.Length-(',' + "`r`n`t`t`t").Length)
 }
 
-(Get-Content ($templatesRoot + 'DefaultRules.generated.Browsers.txt')) -replace '\$browsers', $browsers | Out-File ($rulesRoot + 'DefaultRules.generated.Browsers.cs')
-
+$templateContent = $templateContent -replace '\$template_browsers', $browsers
 
 $os = ''
 $userAgentMatchesData_os.psobject.properties |
@@ -150,7 +153,8 @@ if ($os.Length -gt 0) {
     $os = $os.Substring(0,$os.Length-(',' + "`r`n`t`t`t").Length)
 }
 
-(Get-Content ($templatesRoot + 'DefaultRules.generated.Os.txt')) -replace '\$os', $os | Out-File ($rulesRoot + 'DefaultRules.generated.Os.cs')
+$templateContent = $templateContent -replace '\$template_os', $os
+
 
 $utilities = ''
 $userAgentMatchesData_utilities.psobject.properties |
@@ -162,7 +166,8 @@ if ($utilities.Length -gt 0) {
     $utilities = $utilities.Substring(0,$utilities.Length-(',' + "`r`n`t`t`t").Length)
 }
 
-(Get-Content ($templatesRoot + 'DefaultRules.generated.Utilities.txt')) -replace '\$utilities', $utilities | Out-File ($rulesRoot + 'DefaultRules.generated.Utilities.cs')
+$templateContent = $templateContent -replace '\$template_utilities', $utilities
+$templateContent | Out-File $generatedFile
 
 
 Write-Host 'Done!'

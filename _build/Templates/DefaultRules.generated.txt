@@ -1,0 +1,41 @@
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace MobileDetect.MatchingRules
+{
+    public partial class DefaultRules
+    {
+
+        //The version of Mobile_Detect rules used
+        //https://github.com/serbanghita/Mobile-Detect
+        public const string Version = "$template_version";
+
+        public static readonly ReadOnlyDictionary<string, string> BrowserRegexStrings = new ReadOnlyDictionary<string, string>(new Dictionary<string, string> {
+            $template_browsers
+        });
+
+        public static ReadOnlyDictionary<string, string[]> MobileHeaders = new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]> {
+            $template_mobileHeaders
+        });
+
+        public static readonly ReadOnlyDictionary<string, string> PhonesRegexStrings = new ReadOnlyDictionary<string, string>(new Dictionary<string, string> {
+            $template_phones
+        });
+
+        public static readonly ReadOnlyDictionary<string, string> TabletRegexStrings = new ReadOnlyDictionary<string, string>(new Dictionary<string, string> {
+            $template_tablets
+        });
+
+        public static readonly ReadOnlyDictionary<string, string> OsRegexStrings = new ReadOnlyDictionary<string, string>(new Dictionary<string, string> {
+            $template_os
+        });
+
+        public static readonly string[] UserAgentHeaders = new[] {
+            $template_userAgentHeaders
+        };
+
+        public static readonly ReadOnlyDictionary<string, string> UtilitiesRegexStrings = new ReadOnlyDictionary<string, string>(new Dictionary<string, string> {
+            $template_utilities
+        });
+    }
+}

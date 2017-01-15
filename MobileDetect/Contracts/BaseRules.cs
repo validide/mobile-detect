@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace MobileDetect.Contracts
 {
-    public class BaseRules
+    /// <remarks>This will not detect anything.</remarks>
+    public abstract class BaseRules
     {
         public virtual string GetUserAgent(Dictionary<string, string> requestHeaders)
         {

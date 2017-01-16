@@ -35,6 +35,8 @@ namespace MobileDetectTests.UnitTests
             Assert.Equal(false, nullDetector.IsMobile());
             Assert.Equal(false, nullDetector.IsTablet());
 
+            Assert.Equal(false, nullMobileDetector.IsMobile());
+            Assert.Equal(false, nullTabletDetector.IsTablet());
 
 
             Assert.Equal(true, mobileDetector.IsMobile());

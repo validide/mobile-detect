@@ -9,14 +9,17 @@
 $jsonVersion = '2.8.24'
 
 $jsonUrl = "https://raw.githubusercontent.com/serbanghita/Mobile-Detect/$jsonVersion/Mobile_Detect.json"
+$userAgentTestStringsJsonUrl = "https://raw.githubusercontent.com/serbanghita/Mobile-Detect/$jsonVersion/tests/ualist.json"
 
-$rulesData =  Invoke-WebRequest $jsonUrl | ConvertFrom-Json
+$rulesData =  Invoke-WebRequest $jsonUrl |  ConvertFrom-Json
 $rulesVersion = $rulesData | select -expand version
 
 if ($jsonVersion -ne $rulesVersion) {
   Write-Error "Requested version ($jsonVersion) doesn't match response version($rulesVersion)"
   exit
 }
+
+Invoke-WebRequest $userAgentTestStringsJsonUrl | select -expand content | Out-File '..\MobileDetectTests\TestData\ua-tests.generated.json'
 
 $templateFile = '.\Templates\DefaultRules.generated.txt'
 $generatedFile = '..\MobileDetect\MatchingRules\DefaultRules.generated.cs'

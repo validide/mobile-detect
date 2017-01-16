@@ -1,6 +1,5 @@
 ﻿using MobileDetect.MatchingRules;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using Xunit;
 
@@ -13,11 +12,11 @@ namespace MobileDetectTests.UnitTests
         {
             var rules = new DefaultRules(
                 new string[] { "User-Agent", "Test-User-Agent" },
-                new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>())
+                new Dictionary<string, string[]>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>()
             );
 
 
@@ -42,15 +41,15 @@ namespace MobileDetectTests.UnitTests
         {
             var rules = new DefaultRules(
                 new string[] { "User-Agent", "Test-User-Agent" },
-                new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]>
+                new Dictionary<string, string[]>
                 {
                     {"Known-Mobile-Header", null },
                     {"Known-Mobile-Header-With-Values", new [] { "some-value-a", "some-value-b" } }
-                }),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>())
+                },
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>()
             );
 
             Assert.Equal(false, rules.HasKnownMobileHeaders(null));
@@ -71,11 +70,11 @@ namespace MobileDetectTests.UnitTests
         {
             var rules = new DefaultRules(
                 new string[] { "User-Agent", "Test-User-Agent" },
-                new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>())
+                new Dictionary<string, string[]>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>()
             );
 
             Assert.Equal(false, rules.HasKnownMobileHeaders(null));
@@ -96,11 +95,11 @@ namespace MobileDetectTests.UnitTests
         {
             var rules = new DefaultRules(
                 new string[] { "User-Agent", "Test-User-Agent" },
-                new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>())
+                new Dictionary<string, string[]>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>()
             );
 
             Assert.Equal(false, rules.HasKnownTabletHeaders(null));
@@ -121,15 +120,31 @@ namespace MobileDetectTests.UnitTests
         {
             var rules = new DefaultRules(
                 new string[] { "User-Agent", "Test-User-Agent" },
-                new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>())
+                new Dictionary<string, string[]>(),
+                new Dictionary<string, Regex>
+                {
+                    { "phone", new Regex("a-mobile-phone", RegexOptions.IgnoreCase) }
+                },
+                new Dictionary<string, Regex>
+                {
+                    { "tablet", new Regex("a-tablet", RegexOptions.IgnoreCase) }
+                },
+                new Dictionary<string, Regex>
+                {
+                    { "os", new Regex("mobile-os", RegexOptions.IgnoreCase) }
+                },
+                new Dictionary<string, Regex>
+                {
+                    { "phone", new Regex("mobile-browser", RegexOptions.IgnoreCase) }
+                }
             );
 
-            //this should fail so I remember to add more tests
-            Assert.Equal(true, rules.HasKnownMobileUserAgent(null));
+            Assert.Equal(false, rules.HasKnownMobileUserAgent(null));
+            Assert.Equal(false, rules.HasKnownMobileUserAgent("not-a-mobile"));
+            Assert.Equal(true, rules.HasKnownMobileUserAgent("A-MOBILE-PHONE"));
+            Assert.Equal(true, rules.HasKnownMobileUserAgent("a-tablet"));
+            Assert.Equal(true, rules.HasKnownMobileUserAgent("mobile-os"));
+            Assert.Equal(true, rules.HasKnownMobileUserAgent("MOBILE-BROWSer"));
         }
 
         [Fact]
@@ -137,15 +152,31 @@ namespace MobileDetectTests.UnitTests
         {
             var rules = new DefaultRules(
                 new string[] { "User-Agent", "Test-User-Agent" },
-                new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>()),
-                new ReadOnlyDictionary<string, Regex>(new Dictionary<string, Regex>())
+                new Dictionary<string, string[]>(),
+                new Dictionary<string, Regex>
+                {
+                    { "phone", new Regex("a-mobile-phone", RegexOptions.IgnoreCase) }
+                },
+                new Dictionary<string, Regex>
+                {
+                    { "tablet", new Regex("a-tablet", RegexOptions.IgnoreCase) }
+                },
+                new Dictionary<string, Regex>
+                {
+                    { "os", new Regex("mobile-os", RegexOptions.IgnoreCase) }
+                },
+                new Dictionary<string, Regex>
+                {
+                    { "phone", new Regex("mobile-browser", RegexOptions.IgnoreCase) }
+                }
             );
 
-            //this should fail so I remember to add more tests
-            Assert.Equal(true, rules.HasKnownTabletUserAgent(null));
+            Assert.Equal(false, rules.HasKnownTabletUserAgent(null));
+            Assert.Equal(false, rules.HasKnownTabletUserAgent("not-a-mobile"));
+            Assert.Equal(false, rules.HasKnownTabletUserAgent("A-MOBILE-PHONE"));
+            Assert.Equal(true, rules.HasKnownTabletUserAgent("a-tablet"));
+            Assert.Equal(false, rules.HasKnownTabletUserAgent("mobile-os"));
+            Assert.Equal(false, rules.HasKnownTabletUserAgent("MOBILE-BROWSer"));
         }
     }
 }

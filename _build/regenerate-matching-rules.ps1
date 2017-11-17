@@ -6,7 +6,7 @@
 
 # the version with the matching rules from https://github.com/serbanghita/Mobile-Detect
 # when updating to a new version make sure the url matches
-$jsonVersion = '2.8.24'
+$jsonVersion = '2.8.26'
 
 $jsonUrl = "https://raw.githubusercontent.com/serbanghita/Mobile-Detect/$jsonVersion/Mobile_Detect.json"
 $userAgentTestStringsJsonUrl = "https://raw.githubusercontent.com/serbanghita/Mobile-Detect/$jsonVersion/tests/ualist.json"

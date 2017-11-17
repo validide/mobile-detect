@@ -15,11 +15,11 @@ namespace MobileDetectTests.UnitTests
             var mobileDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.MobileUserAgent } });
             var tabletDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.TabletUserAgent } });
 
-            Assert.Equal(false, nullDetector.IsMobile());
-            Assert.Equal(false, nullDetector.IsTablet());
+            Assert.False(nullDetector.IsMobile());
+            Assert.False(nullDetector.IsTablet());
 
-            Assert.Equal(false, mobileDetector.IsMobile());
-            Assert.Equal(false, tabletDetector.IsTablet());
+            Assert.False(mobileDetector.IsMobile());
+            Assert.False(tabletDetector.IsTablet());
         }
 
         [Fact]
@@ -32,15 +32,15 @@ namespace MobileDetectTests.UnitTests
             var mobileDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.MobileUserAgent } });
             var tabletDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.TabletUserAgent } });
 
-            Assert.Equal(false, nullDetector.IsMobile());
-            Assert.Equal(false, nullDetector.IsTablet());
+            Assert.False(nullDetector.IsMobile());
+            Assert.False(nullDetector.IsTablet());
 
-            Assert.Equal(false, nullMobileDetector.IsMobile());
-            Assert.Equal(false, nullTabletDetector.IsTablet());
+            Assert.False(nullMobileDetector.IsMobile());
+            Assert.False(nullTabletDetector.IsTablet());
 
 
-            Assert.Equal(true, mobileDetector.IsMobile());
-            Assert.Equal(true, tabletDetector.IsTablet());
+            Assert.True(mobileDetector.IsMobile());
+            Assert.True(tabletDetector.IsTablet());
         }
     }
 }

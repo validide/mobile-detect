@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MobileDetect", "MobileDetect\MobileDetect.xproj", "{925050CD-9FEF-4480-984F-4E5A1C5E772A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileDetect", "MobileDetect\MobileDetect.csproj", "{925050CD-9FEF-4480-984F-4E5A1C5E772A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MobileDetectTests", "MobileDetectTests\MobileDetectTests.xproj", "{E7122DE1-9175-4AE6-A8CC-F9C92E74CE9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileDetectTests", "MobileDetectTests\MobileDetectTests.csproj", "{E7122DE1-9175-4AE6-A8CC-F9C92E74CE9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {696543AB-6645-4155-AD65-BD454D7F21B2}
 	EndGlobalSection
 EndGlobal

@@ -5,11 +5,12 @@ namespace MobileDetect.MatchingRules
     public partial class DefaultRules
     {
 
-        //The version of Mobile_Detect rules used
-        //https://github.com/serbanghita/Mobile-Detect
+        ///The version of Mobile_Detect rules used
+        ///https://github.com/serbanghita/Mobile-Detect/tree/$template_version
         public const string Version = "$template_version";
 
-        private static readonly Dictionary<string, string> browserRegexStrings = new Dictionary<string, string> {
+        private static readonly Dictionary<string, string> browserRegexStrings = new Dictionary<string, string>
+        {
             $template_browsers
         };
 
@@ -17,15 +18,18 @@ namespace MobileDetect.MatchingRules
             $template_mobileHeaders
         };
 
-        private static readonly Dictionary<string, string> phonesRegexStrings = new Dictionary<string, string> {
+        private static readonly Dictionary<string, string> phonesRegexStrings = new Dictionary<string, string>
+        {
             $template_phones
         };
 
-        private static readonly Dictionary<string, string> tabletRegexStrings = new Dictionary<string, string> {
+        private static readonly Dictionary<string, string> tabletRegexStrings = new Dictionary<string, string>
+        {
             $template_tablets
         };
 
-        private static readonly Dictionary<string, string> osRegexStrings = new Dictionary<string, string> {
+        private static readonly Dictionary<string, string> osRegexStrings = new Dictionary<string, string>
+        {
             $template_os
         };
 
@@ -33,7 +37,8 @@ namespace MobileDetect.MatchingRules
             $template_userAgentHeaders
         };
 
-        private static readonly Dictionary<string, string> utilitiesRegexStrings = new Dictionary<string, string> {
+        private static readonly Dictionary<string, string> utilitiesRegexStrings = new Dictionary<string, string>
+        {
             $template_utilities
         };
     }

@@ -13,11 +13,11 @@ namespace MobileDetectTests.UnitTests
             var userAgent = "testUserAgent";
 
             Assert.Null(rules.GetUserAgent(null));
-            Assert.Null(rules.GetUserAgent(new Dictionary<string, string>()));
-            Assert.Null(rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", null } }));
-            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", userAgent } }));
-            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "USER-AGENT", userAgent } }));
-            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "user-agent", userAgent } }));
+            Assert.Null(rules.GetUserAgent(new Dictionary<string, string>().ToStringValuesCollection()));
+            Assert.Null(rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", null } }.ToStringValuesCollection()));
+            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", userAgent } }.ToStringValuesCollection()));
+            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "USER-AGENT", userAgent } }.ToStringValuesCollection()));
+            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "user-agent", userAgent } }.ToStringValuesCollection()));
         }
     }
 }

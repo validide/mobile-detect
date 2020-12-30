@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Primitives;
 using MobileDetect.Contracts;
 
 namespace MobileDetect.Implementations
@@ -7,15 +8,12 @@ namespace MobileDetect.Implementations
     public class MobileDetector : IMobileDetector
     {
         private readonly BaseRules _matchingRules;
-        private readonly Dictionary<string, string> _requestHeaders;
+        private readonly ICollection<KeyValuePair<string, StringValues>> _requestHeaders;
         private readonly string _userAgent;
 
-        public MobileDetector(BaseRules matchingRules, Dictionary<string, string> requestHeaders)
+        public MobileDetector(BaseRules matchingRules, ICollection<KeyValuePair<string, StringValues>> requestHeaders)
         {
-            if (matchingRules == null)
-                throw new ArgumentNullException(nameof(matchingRules));
-
-            _matchingRules = matchingRules;
+            _matchingRules = matchingRules ?? throw new ArgumentNullException(nameof(matchingRules));
             _requestHeaders = requestHeaders;
             _userAgent = _matchingRules.GetUserAgent(_requestHeaders);
         }
@@ -37,7 +35,7 @@ namespace MobileDetect.Implementations
         public bool IsTablet()
         {
             if (_requestHeaders == null)
-                return false; //no headers means not mobile
+                return false; //no headers means not tablet
 
             if (_matchingRules.HasKnownTabletHeaders(_requestHeaders))
                 return true;

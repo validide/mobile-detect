@@ -21,19 +21,19 @@ namespace MobileDetectTests.UnitTests
 
 
             Assert.Null(rules.GetUserAgent(null));
-            Assert.Null(rules.GetUserAgent(new Dictionary<string, string>()));
-            Assert.Null(rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", null } }));
+            Assert.Null(rules.GetUserAgent(new Dictionary<string, string>().ToStringValuesCollection()));
+            Assert.Null(rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", null } }.ToStringValuesCollection()));
 
             var userAgent = "userAgent test string";
 
-            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", userAgent } }));
-            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "USER-AGENT", userAgent } }));
-            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "user-agent", userAgent } }));
+            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", userAgent } }.ToStringValuesCollection()));
+            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "USER-AGENT", userAgent } }.ToStringValuesCollection()));
+            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "user-agent", userAgent } }.ToStringValuesCollection()));
 
             Assert.Equal(userAgent + " " + userAgent, rules.GetUserAgent(new Dictionary<string, string> {
                 { "User-Agent", userAgent },
                 { "Test-User-Agent", userAgent}
-            }));            
+            }.ToStringValuesCollection()));            
         }
 
         [Fact]
@@ -53,16 +53,16 @@ namespace MobileDetectTests.UnitTests
             );
 
             Assert.False(rules.HasKnownMobileHeaders(null));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string>()));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Not-A-Mobile", "" } }));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header-With-Values", null } }));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER-WITH-VALUES", "" } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header-With-Values", "some-value-a" } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER-WITH-VALUES", "some-value-b" } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header", null } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER", null } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header", "some-totally-random-value" } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER", "some-other-totally-random-value" } }));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string>().ToStringValuesCollection()));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Not-A-Mobile", "" } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header-With-Values", null } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER-WITH-VALUES", "" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header-With-Values", "some-value-a" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER-WITH-VALUES", "some-value-b" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header", null } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER", null } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header", "some-totally-random-value" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER", "some-other-totally-random-value" } }.ToStringValuesCollection()));
         }
 
         [Fact]
@@ -78,16 +78,16 @@ namespace MobileDetectTests.UnitTests
             );
 
             Assert.False(rules.HasKnownMobileHeaders(null));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string>()));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Not-A-Mobile", "" } }));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", null } }));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "" } }));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "false" } }));
-            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "FAlSE" } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "true" } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "TRUE" } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "tRuE" } }));
-            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CLOUDFRONT-IS-MOBILE-VIEWER", "tRuE" } }));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string>().ToStringValuesCollection()));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Not-A-Mobile", "" } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", null } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "" } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "false" } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "FAlSE" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "true" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "TRUE" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CloudFront-Is-Mobile-Viewer", "tRuE" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "CLOUDFRONT-IS-MOBILE-VIEWER", "tRuE" } }.ToStringValuesCollection()));
         }
 
         [Fact]
@@ -103,16 +103,16 @@ namespace MobileDetectTests.UnitTests
             );
 
             Assert.False(rules.HasKnownTabletHeaders(null));
-            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string>()));
-            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "Not-ATablet", "" } }));
-            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", null } }));
-            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "" } }));
-            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "false" } }));
-            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "FAlSE" } }));
-            Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "true" } }));
-            Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "TRUE" } }));
-            Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "tRuE" } }));
-            Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CLOUDFRONT-IS-TABLET-VIEWER", "tRuE" } }));
+            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string>().ToStringValuesCollection()));
+            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "Not-ATablet", "" } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", null } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "" } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "false" } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "FAlSE" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "true" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "TRUE" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "tRuE" } }.ToStringValuesCollection()));
+            Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CLOUDFRONT-IS-TABLET-VIEWER", "tRuE" } }.ToStringValuesCollection()));
         }
 
         [Fact]

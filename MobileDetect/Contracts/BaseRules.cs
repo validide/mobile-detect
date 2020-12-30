@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 
 namespace MobileDetect.Contracts
@@ -6,7 +7,7 @@ namespace MobileDetect.Contracts
     /// <remarks>This will not detect anything.</remarks>
     public abstract class BaseRules
     {
-        public virtual string GetUserAgent(Dictionary<string, string> requestHeaders)
+        public virtual string GetUserAgent(ICollection<KeyValuePair<string, StringValues>> requestHeaders)
         {
             if (requestHeaders == null)
                 return null;
@@ -21,9 +22,9 @@ namespace MobileDetect.Contracts
             return null;
         }
 
-        public virtual bool HasKnownMobileHeaders(Dictionary<string, string> requestHeaders) => false;
+        public virtual bool HasKnownMobileHeaders(ICollection<KeyValuePair<string, StringValues>> requestHeaders) => false;
 
-        public virtual bool HasKnownTabletHeaders(Dictionary<string, string> requestHeaders) => false;
+        public virtual bool HasKnownTabletHeaders(ICollection<KeyValuePair<string, StringValues>> requestHeaders) => false;
 
         public virtual bool HasKnownMobileUserAgent(string userAgent) => false;
 

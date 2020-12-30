@@ -12,8 +12,8 @@ namespace MobileDetectTests.UnitTests
         {
             var rules = new BaseRulesImplementation();
             var nullDetector = new MobileDetector(rules, null);
-            var mobileDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.MobileUserAgent } });
-            var tabletDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.TabletUserAgent } });
+            var mobileDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.MobileUserAgent } }.ToStringValuesCollection());
+            var tabletDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.TabletUserAgent } }.ToStringValuesCollection());
 
             Assert.False(nullDetector.IsMobile());
             Assert.False(nullDetector.IsTablet());
@@ -27,10 +27,10 @@ namespace MobileDetectTests.UnitTests
         {
             var rules = new TestRules();
             var nullDetector = new MobileDetector(rules, null);
-            var nullMobileDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, null } });
-            var nullTabletDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, null } });
-            var mobileDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.MobileUserAgent } });
-            var tabletDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.TabletUserAgent } });
+            var nullMobileDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, null } }.ToStringValuesCollection());
+            var nullTabletDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, null } }.ToStringValuesCollection());
+            var mobileDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.MobileUserAgent } }.ToStringValuesCollection());
+            var tabletDetector = new MobileDetector(rules, new Dictionary<string, string> { { TestRules.UserAgentHeaderName, TestRules.TabletUserAgent } }.ToStringValuesCollection());
 
             Assert.False(nullDetector.IsMobile());
             Assert.False(nullDetector.IsTablet());

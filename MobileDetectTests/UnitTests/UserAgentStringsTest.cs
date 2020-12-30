@@ -24,7 +24,7 @@ namespace MobileDetectTests.UnitTests
         [MemberData(nameof(UserAgentStrings))]
         public void MobileDetector_Test(UserAgent uaData)
         {
-            var detector = new MobileDetector(rules, new Dictionary<string, string> { { "User-Agent", uaData.user_agent } });
+            var detector = new MobileDetector(rules, new Dictionary<string, string> { { "User-Agent", uaData.user_agent } }.ToStringValuesCollection());
 
             Assert.Equal(uaData.mobile, detector.IsMobile());
             Assert.Equal(uaData.tablet, detector.IsTablet());

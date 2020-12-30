@@ -18,8 +18,7 @@ namespace WebApplication.Controllers
     {
         public IActionResult Index()
         {
-            var headers = Request.Headers.ToDictionary(k => k.Key, v => v.Value.ToString());
-            var detector = new MobileDetector(DefaultRules.Instance, headers);
+            var detector = new MobileDetector(DefaultRules.Instance, Request.Headers);
             var isMobile = detector.IsMobile(); //this is true is the request originates from a mobile phone or tablet
             var isTablet = detector.IsTablet(); //this is true is the request originates from a tablet
 

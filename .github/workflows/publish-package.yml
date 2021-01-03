@@ -47,7 +47,7 @@ jobs:
     - name: PushNuget
       run: dotnet nuget push "$GITHUB_WORKSPACE/.nupkgs/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{secrets.PUBLISH_TO_NUGET_ORG}} --skip-duplicate
     - name: PushGithub
-      run: dotnet nuget push "$GITHUB_WORKSPACE/.nupkgs/*.nupkg" --source $SOURCE_URL --no-symbols --skip-duplicate
+      run: dotnet nuget push "$GITHUB_WORKSPACE/.nupkgs/*.nupkg" --source $SOURCE_URL --api-key $NUGET_AUTH_TOKEN --no-symbols --skip-duplicate
       env:
         NUGET_AUTH_TOKEN: ${{ github.token }}
         SOURCE_URL: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json

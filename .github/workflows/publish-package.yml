@@ -23,7 +23,7 @@ jobs:
         echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
         echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
         echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
-        echo ::set-output name=SOURCE_TAG::0.0.2.1
+        echo ::set-output name=SOURCE_TAG::0.0.2.2
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -47,6 +47,7 @@ jobs:
     - name: PushNuget
       run: dotnet nuget push "$GITHUB_WORKSPACE/.nupkgs/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{secrets.PUBLISH_TO_NUGET_ORG}} --skip-duplicate
     - name: PushGithub
-      run: dotnet nuget push "$GITHUB_WORKSPACE/.nupkgs/*.nupkg" --no-symbols --skip-duplicate
+      run: dotnet nuget push "$GITHUB_WORKSPACE/.nupkgs/*.nupkg" --source $SOURCE_URL --no-symbols --skip-duplicate
       env:
         NUGET_AUTH_TOKEN: ${{ github.token }}
+        SOURCE_URL: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json

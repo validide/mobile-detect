@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MobileDetect\MobileDetect.csproj" />
+    <ProjectReference Include="..\..\src\MobileDetect\MobileDetect.csproj" />
   </ItemGroup>
 
 </Project>

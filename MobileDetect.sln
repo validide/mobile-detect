@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileDetect", "MobileDetect\MobileDetect.csproj", "{925050CD-9FEF-4480-984F-4E5A1C5E772A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileDetect", "src\MobileDetect\MobileDetect.csproj", "{925050CD-9FEF-4480-984F-4E5A1C5E772A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileDetectTests", "MobileDetectTests\MobileDetectTests.csproj", "{E7122DE1-9175-4AE6-A8CC-F9C92E74CE9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileDetectTests", "test\MobileDetectTests\MobileDetectTests.csproj", "{E7122DE1-9175-4AE6-A8CC-F9C92E74CE9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

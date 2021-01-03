@@ -2,7 +2,7 @@
 # Script used to update the rules used to detect devices
 #
 
-. .\_utilities.ps1
+. "$($PSScriptRoot)\_utilities.ps1"
 
 # the version with the matching rules from https://github.com/serbanghita/Mobile-Detect
 # when updating to a new version make sure the url matches
@@ -12,17 +12,17 @@ $jsonUrl = "https://raw.githubusercontent.com/serbanghita/Mobile-Detect/$jsonVer
 $userAgentTestStringsJsonUrl = "https://raw.githubusercontent.com/serbanghita/Mobile-Detect/$jsonVersion/tests/ualist.json"
 
 $rulesData =  Invoke-WebRequest $jsonUrl |  ConvertFrom-Json
-$rulesVersion = $rulesData | select -expand version
+$rulesVersion = $rulesData | Select-Object -expand version
 
 if ($jsonVersion -ne $rulesVersion) {
   Write-Error "Requested version ($jsonVersion) doesn't match response version($rulesVersion)"
   exit
 }
 
-Invoke-WebRequest $userAgentTestStringsJsonUrl | select -expand content | Out-File '..\MobileDetectTests\TestData\ua-tests.generated.json'
+Invoke-WebRequest $userAgentTestStringsJsonUrl | Select-Object -expand content | Out-File "$($PSScriptRoot)\..\test\MobileDetectTests\TestData\ua-tests.generated.json"
 
-$templateFile = '.\Templates\DefaultRules.generated.txt'
-$generatedFile = '..\MobileDetect\MatchingRules\DefaultRules.generated.cs'
+$templateFile = "$($PSScriptRoot)\Templates\DefaultRules.generated.txt"
+$generatedFile = "$($PSScriptRoot)\..\src\MobileDetect\MatchingRules\DefaultRules.generated.cs"
 
 
 $templateContent = Get-Content $templateFile
@@ -33,11 +33,11 @@ $templateContent = $templateContent -replace '\$template_version', $rulesVersion
 
 
 #update mobileHeaders
-$mobileHeadersData = $rulesData | select -expand headerMatch
+$mobileHeadersData = $rulesData | Select-Object -expand headerMatch
 $mobileHeaders = ''
 
 $mobileHeadersData.psobject.properties |
-ForEach {
+ForEach-Object {
     $headerName = Resolve-HeaderName-FromPhp $_.Name
     $mobileHeaders += '{"' + $headerName + '", '
 
@@ -46,7 +46,7 @@ ForEach {
         $values = ''
         
 
-        foreach($val in $_.Value | select -expand matches) {
+        foreach($val in $_.Value | Select-Object -expand matches) {
             $values += '@"' + $val + '", '
         }
 
@@ -75,10 +75,10 @@ if ($mobileHeaders.Length -gt 0) {
 $templateContent = $templateContent -replace '\$template_mobileHeaders', $mobileHeaders
 
 #update userAgentHeaders
-$userAgentHeadersData = $rulesData | select -expand uaHttpHeaders
+$userAgentHeadersData = $rulesData | Select-Object -expand uaHttpHeaders
 $userAgentHeaders = ''
 
-if ($userAgentHeadersData -ne $null) {
+if ($null -ne $userAgentHeadersData) {
         
     foreach($val in $userAgentHeadersData) {
         $headerName = Resolve-HeaderName-FromPhp $val
@@ -100,18 +100,18 @@ $templateContent = $templateContent -replace '\$template_userAgentHeaders', $use
 
 
 #update userAgentMatches
-$userAgentMatchesData = $rulesData | select -expand uaMatch
+$userAgentMatchesData = $rulesData | Select-Object -expand uaMatch
 
-$userAgentMatchesData_phones = $userAgentMatchesData | select -expand phones
-$userAgentMatchesData_tablets = $userAgentMatchesData | select -expand tablets
-$userAgentMatchesData_browsers = $userAgentMatchesData | select -expand browsers
-$userAgentMatchesData_os = $userAgentMatchesData | select -expand os
-$userAgentMatchesData_utilities = $userAgentMatchesData | select -expand utilities
+$userAgentMatchesData_phones = $userAgentMatchesData | Select-Object -expand phones
+$userAgentMatchesData_tablets = $userAgentMatchesData | Select-Object -expand tablets
+$userAgentMatchesData_browsers = $userAgentMatchesData | Select-Object -expand browsers
+$userAgentMatchesData_os = $userAgentMatchesData | Select-Object -expand os
+$userAgentMatchesData_utilities = $userAgentMatchesData | Select-Object -expand utilities
 
 
 $phones = ''
 $userAgentMatchesData_phones.psobject.properties |
-ForEach {
+ForEach-Object {
     $phones += '{"' + $_.Name + '", @"' + $_.Value + '" },' + "`r`n`t`t`t"
 }
 
@@ -124,7 +124,7 @@ $templateContent = $templateContent -replace '\$template_phones', $phones
 
 $tablets = ''
 $userAgentMatchesData_tablets.psobject.properties |
-ForEach {
+ForEach-Object {
     $tablets += '{"' + $_.Name + '", @"' + $_.Value + '" },' + "`r`n`t`t`t"
 }
 
@@ -136,7 +136,7 @@ $templateContent = $templateContent -replace '\$template_tablets', $tablets
 
 $browsers = ''
 $userAgentMatchesData_browsers.psobject.properties |
-ForEach {
+ForEach-Object {
     $browsers += '{"' + $_.Name + '", @"' + $_.Value + '" },' + "`r`n`t`t`t"
 }
 
@@ -148,7 +148,7 @@ $templateContent = $templateContent -replace '\$template_browsers', $browsers
 
 $os = ''
 $userAgentMatchesData_os.psobject.properties |
-ForEach {
+ForEach-Object {
     $os += '{"' + $_.Name + '", @"' + $_.Value + '" },' + "`r`n`t`t`t"
 }
 
@@ -161,7 +161,7 @@ $templateContent = $templateContent -replace '\$template_os', $os
 
 $utilities = ''
 $userAgentMatchesData_utilities.psobject.properties |
-ForEach {
+ForEach-Object {
     $utilities += '{"' + $_.Name + '", @"' + $_.Value + '" },' + "`r`n`t`t`t"
 }
 

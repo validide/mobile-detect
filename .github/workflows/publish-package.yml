@@ -16,23 +16,23 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.101
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore --configuration Release /p:CI=true
-    - name: Test
-      run: pwsh _build/test.ps1 -Configuration Release -Rebuild False -SourceLink false
     - name: Get branch name
       run: |
         echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
         echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
         echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore --configuration Release /p:CI_BUILD=true -p:Version=$SOURCE_TAG
+    - name: Test
+      run: pwsh _build/test.ps1 -Configuration Release -Rebuild False -SourceLink false
     - name: Create package
       run: |
         echo $SOURCE_NAME
         echo $SOURCE_BRANCH
         echo $SOURCE_TAG
-        dotnet pack src/MobileDetect/MobileDetect.csproj --no-build --configuration Release /p:Packing=true /p:PackageOutputPath=%CD%\.nupkgs /p:CI=true -p:Version=$SOURCE_TAG
+        dotnet pack src/MobileDetect/MobileDetect.csproj --no-build --configuration Release /p:Packing=true /p:PackageOutputPath=%CD%\.nupkgs /p:CI_BUILD=true -p:Version=$SOURCE_TAG
       env:
         SOURCE_NAME: ${{ steps.branch_name.outputs.SOURCE_NAME }}
         SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}

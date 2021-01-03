@@ -13,12 +13,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.101
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore --configuration Release /p:CI=true
     - name: Test
-      run: pwsh _build/test.ps1
+      run: pwsh _build/test.ps1 -Configuration Debug -Rebuild True
     - name: Publish coverage
       uses: coverallsapp/github-action@master
       with:

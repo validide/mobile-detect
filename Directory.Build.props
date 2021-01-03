@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Copyright>2017 - $([System.DateTime]::Now.Year) Valentin Dide</Copyright>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <!-- <CodeAnalysisRuleset>$(MSBuildThisFileDirectory).editorconfig</CodeAnalysisRuleset> -->
   </PropertyGroup>
 

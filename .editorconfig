@@ -81,12 +81,12 @@ csharp_space_after_keywords_in_control_flow_statements = true:suggestion
 # Language settings
 csharp_prefer_simple_default_expression = false:none
 
-
-[*.{Generated,generated}.cs]
-generated_code = true
-
 # Analyzers
 # dotnet_diagnostic.<RULE_ID>.severity = <default|none|silent|info|warning|error>
 
 # RCS1090: Call 'ConfigureAwait(false)'.
 dotnet_diagnostic.RCS1090.severity = error
+
+
+[*.Generated.cs, *.generated.cs]
+generated_code = true

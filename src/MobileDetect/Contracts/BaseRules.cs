@@ -28,10 +28,6 @@ namespace MobileDetect.Contracts
             return null;
         }
 
-        private async System.Threading.Tasks.Task DoSomething() {
-            await System.Threading.Tasks.Task.Delay(1);
-        }
-
         /// <summary>
         /// Returns true if the collection contains a header which is a known mobile header.
         /// </summary>

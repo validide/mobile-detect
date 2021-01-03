@@ -34,7 +34,7 @@ namespace MobileDetectTests.UnitTests
         {
             get
             {
-                using (var r = new StreamReader("TestData\\ua-tests.generated.json"))
+                using (var r = new StreamReader("TestData/ua-tests.generated.json"))
                 {
                     string json = r.ReadToEnd();
                     var data = JsonConvert.DeserializeObject<UserAgentData>(json);

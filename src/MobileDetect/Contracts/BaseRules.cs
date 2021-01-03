@@ -10,6 +10,8 @@ namespace MobileDetect.Contracts
     /// <remarks>This will not detect anything.</remarks>
     public abstract class BaseRules
     {
+        private readonly string UserAgentHeaderName = "User-Agent";
+
         /// <summary>
         /// Get the user agent header value.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MobileDetect.Contracts
 
             foreach (var header in requestHeaders)
             {
-                if ("User-Agent".Equals(header.Key, StringComparison.OrdinalIgnoreCase))
+                if (UserAgentHeaderName.Equals(header.Key, StringComparison.OrdinalIgnoreCase))
                 {
                     return header.Value;
                 }

@@ -1,4 +1,5 @@
-﻿using MobileDetectTests.TestData;
+﻿using Microsoft.Extensions.Primitives;
+using MobileDetectTests.TestData;
 using System.Collections.Generic;
 using Xunit;
 
@@ -18,6 +19,16 @@ namespace MobileDetectTests.UnitTests
             Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", userAgent } }.ToStringValuesCollection()));
             Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "USER-AGENT", userAgent } }.ToStringValuesCollection()));
             Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "user-agent", userAgent } }.ToStringValuesCollection()));
+
+            Assert.Null(rules.GetUserAgent(new[] {
+                new KeyValuePair<string, StringValues>(null, "null")
+            }));
+            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> {
+                { "some-header", null },
+                { "foo", "bar" },
+                { "user-agent", userAgent }
+            }.ToStringValuesCollection()));
+
         }
     }
 }

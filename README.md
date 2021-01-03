@@ -4,6 +4,9 @@ A simple C# library to detect if the request is from a mobile device
 
 This is based on the PHP version [Mobile-Detect](https://github.com/serbanghita/Mobile-Detect) (the current version has limited functionality compared to the original).
 
+## Status
+[![Coverage Status](https://coveralls.io/repos/github/validide/mobile-detect/badge.svg?branch=master)](https://coveralls.io/github/validide/mobile-detect?branch=master)
+![Tests](https://github.com/validide/mobile-detect/workflows/Tests/badge.svg?branch=master)
 
 ## Usage
 

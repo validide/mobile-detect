@@ -1,4 +1,6 @@
-﻿using MobileDetect.MatchingRules;
+﻿using Microsoft.Extensions.Primitives;
+using MobileDetect.MatchingRules;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Xunit;
@@ -7,6 +9,64 @@ namespace MobileDetectTests.UnitTests
 {
     public class DefaultRulesTest
     {
+        [Fact]
+        public void Constructor_Tests()
+        {
+            Assert.Throws<ArgumentNullException>(() => new DefaultRules(
+                null,
+                new Dictionary<string, string[]>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>()
+            ));
+
+            Assert.Throws<ArgumentNullException>(() => new DefaultRules(
+                new string[] { "User-Agent", "Test-User-Agent" },
+                null,
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>()
+            ));
+
+            Assert.Throws<ArgumentNullException>(() => new DefaultRules(
+                new string[] { "User-Agent", "Test-User-Agent" },
+                new Dictionary<string, string[]>(),
+                null,
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>()
+            ));
+
+            Assert.Throws<ArgumentNullException>(() => new DefaultRules(
+                new string[] { "User-Agent", "Test-User-Agent" },
+                new Dictionary<string, string[]>(),
+                new Dictionary<string, Regex>(),
+                null,
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>()
+            ));
+
+            Assert.Throws<ArgumentNullException>(() => new DefaultRules(
+                new string[] { "User-Agent", "Test-User-Agent" },
+                new Dictionary<string, string[]>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                null,
+                new Dictionary<string, Regex>()
+            ));
+
+            Assert.Throws<ArgumentNullException>(() => new DefaultRules(
+                new string[] { "User-Agent", "Test-User-Agent" },
+                new Dictionary<string, string[]>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                new Dictionary<string, Regex>(),
+                null
+            ));
+        }
+
         [Fact]
         public void GetUserAgnt_Test()
         {
@@ -19,21 +79,33 @@ namespace MobileDetectTests.UnitTests
                 new Dictionary<string, Regex>()
             );
 
-
             Assert.Null(rules.GetUserAgent(null));
             Assert.Null(rules.GetUserAgent(new Dictionary<string, string>().ToStringValuesCollection()));
             Assert.Null(rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", null } }.ToStringValuesCollection()));
+            Assert.Null(rules.GetUserAgent(new Dictionary<string, string> { { "uSer-AgeTt", null } }.ToStringValuesCollection()));
+            Assert.Null(rules.GetUserAgent(new[] {
+                new KeyValuePair<string, StringValues>(null, "null")
+            }));
 
             var userAgent = "userAgent test string";
 
             Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "User-Agent", userAgent } }.ToStringValuesCollection()));
             Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "USER-AGENT", userAgent } }.ToStringValuesCollection()));
             Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> { { "user-agent", userAgent } }.ToStringValuesCollection()));
+            Assert.Equal(userAgent, rules.GetUserAgent(new Dictionary<string, string> {
+                { "some-header", null },
+                { "foo", "bar" },
+                { "user-agent", userAgent }
+            }.ToStringValuesCollection()));
 
             Assert.Equal(userAgent + " " + userAgent, rules.GetUserAgent(new Dictionary<string, string> {
                 { "User-Agent", userAgent },
                 { "Test-User-Agent", userAgent}
-            }.ToStringValuesCollection()));            
+            }.ToStringValuesCollection()));
+
+            Assert.Equal("A B", rules.GetUserAgent(new[] {
+                new KeyValuePair<string, StringValues>("User-Agent", new StringValues(new[] {"A", "B", null}))
+            }));
         }
 
         [Fact]

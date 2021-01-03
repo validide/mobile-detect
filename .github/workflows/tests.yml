@@ -14,7 +14,7 @@ jobs:
       with:
         dotnet-version: 5.0.101
     - name: Test
-      run: pwsh _build/test.ps1 -Configuration Debug -Rebuild True
+      run: pwsh _build/test.ps1 -Configuration Debug -Rebuild True -SourceLink false
     - name: Publish coverage
       uses: coverallsapp/github-action@master
       with:

@@ -21,7 +21,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release /p:CI=true
     - name: Test
-      run: pwsh _build/test.ps1 -Configuration Release -Rebuild False
+      run: pwsh _build/test.ps1 -Configuration Release -Rebuild False -SourceLink false
     - name: Get branch name
       run: |
         echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}

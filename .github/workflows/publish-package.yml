@@ -1,8 +1,7 @@
 name: Publish package
-# on:
-#   release:
-#     types: [created]
-on: [push, pull_request]
+on:
+  release:
+    types: [created]
 
 jobs:
 
@@ -23,7 +22,6 @@ jobs:
         echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
         echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
         echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
-        echo ::set-output name=SOURCE_TAG::0.0.2.2
     - name: Restore dependencies
       run: dotnet restore
     - name: Build

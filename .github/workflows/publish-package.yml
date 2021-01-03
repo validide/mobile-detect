@@ -10,18 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      SOURCE_NAME: ${GITHUB_REF#refs/*/}
+      SOURCE_BRANCH: ${GITHUB_REF#refs/heads/}
+      SOURCE_TAG: 0.0.0.4 #${GITHUB_REF#refs/tags/}
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.101
-    - name: Get branch name
-      run: |
-        echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-        echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
-        echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
-        echo ::set-output name=SOURCE_TAG::0.0.0.4
     - name: Restore dependencies
       run: dotnet restore
     - name: Build

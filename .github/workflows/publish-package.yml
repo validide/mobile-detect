@@ -39,7 +39,7 @@ jobs:
         echo $SOURCE_NAME
         echo $SOURCE_BRANCH
         echo $SOURCE_TAG
-        dotnet pack src/MobileDetect/MobileDetect.csproj --no-build --configuration Release /p:Packing=true /p:PackageOutputPath=%CD%\.nupkgs /p:CI_BUILD=true -p:Version=$SOURCE_TAG
+        dotnet pack src/MobileDetect/MobileDetect.csproj --no-build --configuration Release /p:Packing=true /p:PackageOutputPath=$GITHUB_WORKSPACE/.nupkgs /p:CI_BUILD=true -p:Version=$SOURCE_TAG
       env:
         SOURCE_NAME: ${{ steps.branch_name.outputs.SOURCE_NAME }}
         SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}

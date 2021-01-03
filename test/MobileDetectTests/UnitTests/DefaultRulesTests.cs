@@ -181,6 +181,13 @@ namespace MobileDetectTests.UnitTests
             Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "" } }.ToStringValuesCollection()));
             Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "false" } }.ToStringValuesCollection()));
             Assert.False(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "FAlSE" } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownTabletHeaders(new[] {
+                new KeyValuePair<string, StringValues>("CloudFront-Is-Tablet-Viewer", "aaa"),
+                new KeyValuePair<string, StringValues>("some-value", new StringValues((string)null)),
+                new KeyValuePair<string, StringValues>("some-value", new StringValues((string)null)),
+                new KeyValuePair<string, StringValues>("foo", new StringValues("(string)null")),
+                new KeyValuePair<string, StringValues>("bar", new StringValues(new[]{ null, "A", "B"}))
+            }));
             Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "true" } }.ToStringValuesCollection()));
             Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "TRUE" } }.ToStringValuesCollection()));
             Assert.True(rules.HasKnownTabletHeaders(new Dictionary<string, string> { { "CloudFront-Is-Tablet-Viewer", "tRuE" } }.ToStringValuesCollection()));

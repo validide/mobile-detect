@@ -16,7 +16,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --configuration Release /p:CI=true
     - name: Test
       run: pwsh _build/test.ps1
     - name: Publish coverage

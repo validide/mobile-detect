@@ -5,6 +5,7 @@ $params = New-Object System.Collections.ArrayList
 [void] $params.Add('/p:CoverletOutputFormat=\`"lcov,opencover\`"')
 [void] $params.Add("/p:CoverletOutput='$coveragePath'")
 [void] $params.Add('/p:Threshold=95')
+[void] $params.Add('/p:UseSourceLink=true')
 
 if (Test-Path -Path $coveragePath -PathType Container) {
   Remove-Item -Path $coveragePath -Recurse -Force

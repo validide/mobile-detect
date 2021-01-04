@@ -116,7 +116,8 @@ namespace MobileDetectTests.UnitTests
                 new Dictionary<string, string[]>
                 {
                     {"Known-Mobile-Header", null },
-                    {"Known-Mobile-Header-With-Values", new [] { "some-value-a", "some-value-b" } }
+                    {"Known-Mobile-Header-With-Values", new [] { "some-value-a", "some-value-b" } },
+                    {"Known-Mobile-Header-With-Values-2", new [] { "some-value-a", null } }
                 },
                 new Dictionary<string, Regex>(),
                 new Dictionary<string, Regex>(),
@@ -129,6 +130,32 @@ namespace MobileDetectTests.UnitTests
             Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Not-A-Mobile", "" } }.ToStringValuesCollection()));
             Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header-With-Values", null } }.ToStringValuesCollection()));
             Assert.False(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER-WITH-VALUES", "" } }.ToStringValuesCollection()));
+            Assert.False(rules.HasKnownMobileHeaders(new[] {
+                new KeyValuePair<string, StringValues>("KNOWN-MOBILE-HEADER-WITH-VALUES", ""),
+                new KeyValuePair<string, StringValues>("some-value", new StringValues((string)null)),
+                new KeyValuePair<string, StringValues>("some-value", new StringValues((string)null)),
+                new KeyValuePair<string, StringValues>("foo", new StringValues("(string)null")),
+                new KeyValuePair<string, StringValues>("bar", new StringValues(new[]{ null, "A", "B"}))
+            }));
+            Assert.False(rules.HasKnownMobileHeaders(new[] {
+                new KeyValuePair<string, StringValues>("KNOWN-MOBILE-HEADER-WITH-VALUES", new StringValues((string)null)),
+                new KeyValuePair<string, StringValues>("some-value", new StringValues((string)null)),
+                new KeyValuePair<string, StringValues>("foo", new StringValues("(string)null")),
+                new KeyValuePair<string, StringValues>("bar", new StringValues(new[]{ null, "A", "B"}))
+            }));
+            Assert.False(rules.HasKnownMobileHeaders(new[] {
+                new KeyValuePair<string, StringValues>("KNOWN-MOBILE-HEADER-WITH-VALUES", new StringValues((string)null)),
+                new KeyValuePair<string, StringValues>("foo", new StringValues("(string)null")),
+                new KeyValuePair<string, StringValues>("bar", new StringValues(new[]{ null, "A", "B"}))
+            }));
+            Assert.False(rules.HasKnownMobileHeaders(new[] {
+                new KeyValuePair<string, StringValues>("KNOWN-MOBILE-HEADER-WITH-VALUES", new StringValues(new[]{ null, "A", "B"})),
+                new KeyValuePair<string, StringValues>("foo", new StringValues("(string)null"))
+            }));
+            Assert.False(rules.HasKnownMobileHeaders(new[] {
+                new KeyValuePair<string, StringValues>("KNOWN-MOBILE-HEADER-WITH-VALUES", new StringValues(new[]{ null, "A", "B"})),
+                new KeyValuePair<string, StringValues>("foo", new StringValues("(string)null"))
+            }));
             Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header-With-Values", "some-value-a" } }.ToStringValuesCollection()));
             Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "KNOWN-MOBILE-HEADER-WITH-VALUES", "some-value-b" } }.ToStringValuesCollection()));
             Assert.True(rules.HasKnownMobileHeaders(new Dictionary<string, string> { { "Known-Mobile-Header", null } }.ToStringValuesCollection()));

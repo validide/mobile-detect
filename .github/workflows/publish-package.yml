@@ -32,7 +32,7 @@ jobs:
         SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
         SOURCE_TAG_TRIMMED: ${{ steps.branch_name.outputs.SOURCE_TAG_TRIMMED }}
     - name: Test
-      run: pwsh _build/test.ps1 -Configuration Release -Rebuild False -SourceLink false
+      run: pwsh _build/test.ps1 -Configuration Release -Rebuild False -SourceLink false -GenerateReport false
     - name: Create package
       run: |
         echo $SOURCE_NAME
